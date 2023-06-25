@@ -11,14 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('posts', function (Blueprint $table) {
+        Schema::create('comentarios', function (Blueprint $table) {
             $table->id();
-            $table->string('titulo');
-            $table->text('descripcion');
-            $table->string('imagen');
-            //Asociación del post al usuario: Relación user - post
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            //OnDelete cascade significa que si un usuario es eliminado, se eliminan sus posts de publicaciones
+            //Se integra la relación con la tabla "posts"
+            //$table->foreignId('post_id')->constrained("post");
+            $table->foreignId('post_id')->constrained()->onDelete('cascade');
+            $table->string('comentario');
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('posts');
+        Schema::dropIfExists('comentarios');
     }
 };
